@@ -1,0 +1,126 @@
+Script started on Thursday 02 June 2016 02:58:30 PM IST
+]0;vikasj@vikas: ~/Documents/Intern/maze_rlvikasj@vikas:~/Documents/Intern/maze_rl$ python3 qlearn.py [K3 qlearn.py [K3 qlearn.py [K[Kpythone [K[K3 perm
+perm/                    perm_transfer_qlearn.py  
+]0;vikasj@vikas: ~/Documents/Intern/maze_rlvikasj@vikas:~/Documents/Intern/maze_rl$ python3 perm_transfer_qlearn.py 
+/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3agg.py:18: UserWarning: The Gtk3Agg backend is known to not work on Python 3.x with pycairo. Try installing cairocffi.
+  "The Gtk3Agg backend is known to not work on Python 3.x with pycairo. "
+total no. of tasks:  6
+permutation no.:  1
+[40, 34, 1, 1, 14, 1]
+permutation no.:  2
+[1, 1, 1, 1, 1, 1]
+permutation no.:  3
+[42, 38, 1, 1, 5, 4]
+permutation no.:  4
+^CTraceback (most recent call last):
+  File "perm_transfer_qlearn.py", line 149, in <module>
+    plt.savefig("perm/%d/%02d_%03d.png" % (perm,task,task_epi))
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/pyplot.py", line 688, in savefig
+    res = fig.savefig(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/figure.py", line 1565, in savefig
+    self.canvas.print_figure(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backend_bases.py", line 2232, in print_figure
+    **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3agg.py", line 97, in print_png
+    return agg.print_png(filename, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_agg.py", line 527, in print_png
+    FigureCanvasAgg.draw(self)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_agg.py", line 474, in draw
+    self.figure.draw(self.renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/figure.py", line 1159, in draw
+    func(*args)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/axes/_base.py", line 2324, in draw
+    a.draw(renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/axis.py", line 1111, in draw
+    tick.draw(renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/axis.py", line 247, in draw
+    self.tick1line.draw(renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/lines.py", line 802, in draw
+    marker_trans = marker_trans.scale(w)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/transforms.py", line 1965, in scale
+    np.float_)
+KeyboardInterrupt
+/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3.py:219: Warning: Source ID 8 was not found when attempting to remove it
+  GLib.source_remove(self._idle_draw_id)
+]0;vikasj@vikas: ~/Documents/Intern/maze_rlvikasj@vikas:~/Documents/Intern/maze_rl$ python3 perm_transfer_qlearn.py 
+/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3agg.py:18: UserWarning: The Gtk3Agg backend is known to not work on Python 3.x with pycairo. Try installing cairocffi.
+  "The Gtk3Agg backend is known to not work on Python 3.x with pycairo. "
+total no. of tasks:  6
+permutation no.:  1
+[30, 32, 1, 1, 5, 7]
+permutation no.:  2
+^CTraceback (most recent call last):
+  File "perm_transfer_qlearn.py", line 150, in <module>
+    plt.savefig("perm/%d/%02d_%03d.png" % (perm,task,task_epi))
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/pyplot.py", line 688, in savefig
+    res = fig.savefig(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/figure.py", line 1565, in savefig
+    self.canvas.print_figure(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backend_bases.py", line 2232, in print_figure
+    **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3agg.py", line 97, in print_png
+    return agg.print_png(filename, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_agg.py", line 527, in print_png
+    FigureCanvasAgg.draw(self)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_agg.py", line 474, in draw
+    self.figure.draw(self.renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/figure.py", line 1159, in draw
+    func(*args)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/axes/_base.py", line 2324, in draw
+    a.draw(renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/image.py", line 383, in draw
+    self._draw_unsampled_image(renderer, gc)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/image.py", line 360, in _draw_unsampled_image
+    trans_ic_to_canvas)
+KeyboardInterrupt
+/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3.py:219: Warning: Source ID 8 was not found when attempting to remove it
+  GLib.source_remove(self._idle_draw_id)
+]0;vikasj@vikas: ~/Documents/Intern/maze_rlvikasj@vikas:~/Documents/Intern/maze_rl$ python3 perm_transfer_qlearn.py 
+/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3agg.py:18: UserWarning: The Gtk3Agg backend is known to not work on Python 3.x with pycairo. Try installing cairocffi.
+  "The Gtk3Agg backend is known to not work on Python 3.x with pycairo. "
+total no. of tasks:  5
+permutation no.:  1
+[28, 27, 26, 60, 33]
+permutation no.:  2
+^CTraceback (most recent call last):
+  File "perm_transfer_qlearn.py", line 151, in <module>
+    plt.savefig("perm/%d/%02d_%03d.png" % (perm,task,task_epi))
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/pyplot.py", line 688, in savefig
+    res = fig.savefig(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/figure.py", line 1565, in savefig
+    self.canvas.print_figure(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backend_bases.py", line 2232, in print_figure
+    **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_gtk3agg.py", line 97, in print_png
+    return agg.print_png(filename, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_agg.py", line 527, in print_png
+    FigureCanvasAgg.draw(self)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/backends/backend_agg.py", line 474, in draw
+    self.figure.draw(self.renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/figure.py", line 1159, in draw
+    func(*args)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/axes/_base.py", line 2324, in draw
+    a.draw(renderer)
+  File "/usr/local/lib/python3.4/dist-packages/matplotlib/artist.py", line 61, in draw_wrapper
+    draw(artist, renderer, *args, **kwargs)
+  File "/
