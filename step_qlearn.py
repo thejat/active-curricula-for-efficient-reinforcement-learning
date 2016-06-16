@@ -11,49 +11,47 @@ class Maze(object):
 		self.grid_size = grid_size
 		self.free_cells = free_cells
 		self.goal = goal
-		self.maze = np.zeros((grid_size,grid_size))
-		for i in free_cells:
+		self.maze = np.zeros((self.grid_size, self.grid_size))
+		for i in self.free_cells:
 			self.maze[i[0]][i[1]] = 1
 
 	def reset(self):
-		start_index = np.random.randint(0,len(self.free_cells))
-		self.curr_state = free_cells[start_index]
+		self.start_index = np.random.randint(0,len(self.free_cells))
+		self.curr_state = self.free_cells[self.start_index]
 
 	def state(self):
 		return self.curr_state
 
 	def draw(self, perm, task):
-		grid = np.zeros((self.grid_size, self.grid_size))
+		self.grid = np.zeros((self.grid_size, self.grid_size))
 		for i in self.free_cells:
-			grid[i[1]][i[0]] = 0.5
-		grid[self.goal[1]][self.goal[0]] = 1
-		plt.imshow(grid, interpolation='none', cmap='gray')
+			self.grid[i[1]][i[0]] = 0.5
+		self.grid[self.goal[1]][self.goal[0]] = 1
+		plt.imshow(self.grid, interpolation='none', cmap='gray')
 		plt.savefig("perm2/%d/%02d.png" % (perm,task))
 
 	def act(self, action):
 		if(action == 0):
-			next_state = [self.curr_state[0]-1,self.curr_state[1]]
+			self.next_state = [self.curr_state[0]-1,self.curr_state[1]]
 		elif(action == 1):
-			next_state = [self.curr_state[0]+1,self.curr_state[1]]
+			self.next_state = [self.curr_state[0]+1,self.curr_state[1]]
 		elif(action == 2):
-			next_state = [self.curr_state[0],self.curr_state[1]+1]
+			self.next_state = [self.curr_state[0],self.curr_state[1]+1]
 		elif(action == 3):
-			next_state = [self.curr_state[0],self.curr_state[1]-1]
+			self.next_state = [self.curr_state[0],self.curr_state[1]-1]
 
-		if ((next_state in free_cells) or (next_state == self.goal)):
-			self.curr_state = next_state
+		if ((self.next_state in self.free_cells) or (self.next_state == self.goal)):
+			self.curr_state = self.next_state
 		else:
-			next_state = self.curr_state
+			self.next_state = self.curr_state
 
-		if(next_state == self.goal):
-			reward = 1
-			game_over = True
+		if(self.next_state == self.goal):
+			self.reward = 1
+			self.game_over = True
 		else:
-			reward = 0
-			game_over = False
-
-		return next_state, reward, game_over
-
+			self.reward = 0
+			self.game_over = False
+		return self.next_state, self.reward, self.game_over
 
 if __name__ == "__main__":
 
