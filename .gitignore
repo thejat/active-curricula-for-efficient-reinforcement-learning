@@ -5,3 +5,4 @@ step/*
 maze_rl/perm/
 inter/*
 verify/*
+greedy_max/*

@@ -14,6 +14,7 @@ class Maze(object):
 	def reset(self):
 		self.start_index = np.random.randint(0,len(self.free_cells))
 		self.curr_state = self.free_cells[self.start_index]
+		# print(self.curr_state)
 
 	def state(self):
 		return self.curr_state
@@ -47,6 +48,7 @@ class Maze(object):
 
 		if(self.next_state == self.goal):
 			self.reward = 1
+			# printf('yes')
 			self.game_over = True
 		else:
 			self.game_over = False
