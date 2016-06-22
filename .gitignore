@@ -1,8 +1,8 @@
 comb/
-curr_1/
+/Indep_domain/curr_1/
 rep/
 step/
-perm/
+/old_maze_rl/perm/
 inter/
 verify/
 greedy_max/
