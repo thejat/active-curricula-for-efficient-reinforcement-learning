@@ -3,6 +3,7 @@ from maze import Maze
 import copy
 import random
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from sklearn import linear_model
 
 def change(Q1, Q2, env):
@@ -124,19 +125,20 @@ if __name__ == "__main__":
 	for i in range(no_tasks-1):
 		for j in range(no_tasks):
 			for feat in range(no_features):
-				x = (task_features[i][feat] - task_features[j][feat])/max(task_features[i][feat], 0.1)
+				x = (task_features[i][feat] - task_features[j][feat])/max(task_features[i][feat], 0.01)
 				pair_features[i][j].append(x)
 	
 	pair_features = np.asarray(pair_features)
-	print (pair_features)
+	# print (pair_features)
 	X = []
 	for i in range(no_tasks-1):
 		for j in range(no_tasks):
 			X.append([])
 			X[-1].append(pair_features[i][j][0])
-			# X[-1].append(pair_features[i][j][1])
+			X[-1].append(pair_features[i][j][1])
+			X[-1].append(pair_features[i][j][2])
 	X = np.asarray(X)
-	print (X)
+
 	## Computing inter task tranferability matrix
 
 	tot_tasks = copy.deepcopy(subtasks)
@@ -148,7 +150,6 @@ if __name__ == "__main__":
 		s_env.draw("F_model/tasks/", Ts)
 		Q = learn_source(Ts, s_env)
 		for Tf in range(no_tasks):
-			# if(Ts != Tf):
 			print ("Task pair: (%d,%d)" % (Ts, Tf))
 			f_env = Maze(gridsize, tot_tasks[Tf][:-1], tot_tasks[Tf][-1])
 			# print Q
@@ -156,20 +157,13 @@ if __name__ == "__main__":
 				Q2 = copy.deepcopy(Q)
 				F[Ts][Tf] += Transfer(Q2, f_env)
 
-	# for Ts in range(no_tasks-1):
-	# 	for Tf in range(no_tasks):
-	# 		if(Ts == Tf):
-	# 			F[Ts][Tf] = 0.15
-	# 		else:
-	# 			F[Ts][Tf] /= norm
-	# print F
 	F = F / F.max(axis = 0)
-	# print F
+
 	y = []
 	for i in range(no_tasks-1):
 		for j in range(no_tasks):
 			y.append(F[i][j])
-	print (y)	
+
 	y = np.asarray(y)
 	data = np.c_[X.reshape(len(X), -1), y.reshape(len(y), -1)]
 	np.random.shuffle(data)
@@ -178,17 +172,24 @@ if __name__ == "__main__":
 	[X_train, X_test] = np.split(X2, [len(X2)-3])
 	[y_train, y_test] = np.split(y2, [len(y2)-3])
 
-	print (X_train, y_train)
-	print (X_test, y_test)
 	clf = linear_model.LinearRegression()
+	# clf = linear_model.Ridge (alpha = .1)
 	clf.fit(X_train, y_train)
-	# clf.fit(X_train[:,np.newaxis], y_train)
-	predict = clf.predict(X_test)
-	print (predict, y_test)
+	predict_test = clf.predict(X_test)
+	print (predict_test, y_test)
 
 	plt.figure(3)
-	plt.scatter(X2, y2, color='red')
-	plt.plot(X2, clf.predict(X2), color='blue')
+	plt.scatter(X2[:,0], y2, color='red')
+	# fig = plt.figure(3)
+	# ax = fig.add_subplot(111, projection='3d')
+	# ax.scatter(X2[:,0], X2[:,1], y2, color='red')
+	predict_train = clf.predict(X_train)
+	plt.scatter(X_train[:,0], predict_train, color='blue')
+	plt.scatter(X_test[:,0], predict_test, color='magenta')
+
+	predict = clf.predict(X2)
+	for i in range(len(X2)):
+		plt.plot([X2[i][0], X2[i][0]], [y2[i], predict[i]], color='green')
 	plt.savefig('F_model/model.png')
 
 	plt.figure(2)
