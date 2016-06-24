@@ -5,6 +5,7 @@ import random
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn import linear_model
+from scipy.spatial.distance import cosine
 
 def change(Q1, Q2, env):
 	thres = 0.0 
@@ -64,7 +65,7 @@ def learn_source(task_num, s_env, epsilon = 0.3, alpha = 0.6, discount = 0.9):
 	plt.figure(1)
 	plt.clf()
 	plt.imshow(policy, interpolation='none', cmap='gray')
-	plt.savefig("F_model/policies/source_policy%d.png" % task_num)
+	plt.savefig("active_F_model/policies/source_policy%d.png" % task_num)
 	return Q
 
 def Transfer(Q, f_env, f_step = 300, epsilon = 0.3, alpha = 0.01, discount = 0.9):
@@ -98,6 +99,19 @@ def Transfer(Q, f_env, f_step = 300, epsilon = 0.3, alpha = 0.01, discount = 0.9
 	# print (tot_reward)
 	return tot_reward
 
+def FindNextPair(max_eigenv, pairs, pair_features):
+	max_sim = 0
+	for (i,j) in pairs:
+		sim = 1 - cosine(max_eigenv, pair_features[i][j])
+		# print sim
+		if(sim < 0):
+			sim = -1*sim
+		if( sim > max_sim):
+			next_i = i
+			next_j = j
+			max_sim = sim
+	return [next_i, next_j]
+
 if __name__ == "__main__":
 
 	gridsize = 7
@@ -118,7 +132,7 @@ if __name__ == "__main__":
 	task_features = sfeatures + tfeatures
 	no_features = 3
 	# I have 20 task pairs, I have to select some of them for learning the regression model. which one to choose?
-	# Answer -- As of now randomly choosing some pairs as training and remaining as test.
+	# Answer -- Active learning will help in it. But how many to choose?
 
 	no_tasks = len(subtasks)+1
 	pair_features = [ [[] for i in range(no_tasks)] for j in range(no_tasks-1) ]
@@ -132,13 +146,16 @@ if __name__ == "__main__":
 	pair_features = np.asarray(pair_features)
 	# print (pair_features)
 	X = []
-	for i in range(no_tasks-1):
-		for j in range(no_tasks):
-			X.append([])
-			X[-1].append(pair_features[i][j][0])
-			X[-1].append(pair_features[i][j][1])
-			X[-1].append(pair_features[i][j][2])
-	X = np.asarray(X)
+	y = []
+	# for i in range(no_tasks-1):
+	# 	for j in range(no_tasks):
+	# 		if(i == j):
+	# 			continue
+	# 		X.append([])
+	# 		X[-1].append(pair_features[i][j][0])
+	# 		# X[-1].append(pair_features[i][j][1])
+	# 		X[-1].append(pair_features[i][j][2])
+	# X = np.asarray(X)
 
 	## Computing inter task tranferability matrix
 
@@ -146,32 +163,69 @@ if __name__ == "__main__":
 	tot_tasks.append(target_task)
 	F = np.zeros((no_tasks-1, no_tasks))
 	rounds = 20
-	for Ts in range(no_tasks-1):
-		s_env = Maze(gridsize, tot_tasks[Ts][:-1], tot_tasks[Ts][-1])
-		s_env.draw("F_model/tasks/", Ts)
-		Q = learn_source(Ts, s_env)
-		for Tf in range(no_tasks):
-			print ("Task pair: (%d,%d)" % (Ts, Tf))
-			f_env = Maze(gridsize, tot_tasks[Tf][:-1], tot_tasks[Tf][-1])
-			# print Q
-			for r in range(rounds):
-				Q2 = copy.deepcopy(Q)
-				F[Ts][Tf] += Transfer(Q2, f_env)
 
-	F = F / F.max(axis = 0)
-
-	y = []
+	pairs = []
 	for i in range(no_tasks-1):
 		for j in range(no_tasks):
-			y.append(F[i][j])
+			if(i != j):
+				pairs.append([i, j])
 
+	num_inputs = len(pairs)
+
+	D = []
+	next_i = np.random.randint(0, no_tasks-1)
+	next_j = np.random.randint(0, no_tasks)
+	# D.append(pair_features[first_i][first_j])
+
+	while len(D) != num_inputs - 1:
+		pairs.remove([next_i, next_j])
+		D.append(pair_features[next_i][next_j])
+		X.append([])
+		X[-1].append(pair_features[next_i][next_j][0])
+		X[-1].append(pair_features[next_i][next_j][1])
+		X[-1].append(pair_features[next_i][next_j][2])
+
+	# for Ts in range(no_tasks-1):
+		s_env = Maze(gridsize, tot_tasks[next_i][:-1], tot_tasks[next_i][-1])
+		s_env.draw("active_F_model/tasks/", next_i)
+		Q = learn_source(next_i, s_env)
+		# for Tf in range(no_tasks):
+		print ("Task pair: (%d,%d)" % (next_i, next_j))
+		f_env = Maze(gridsize, tot_tasks[next_j][:-1], tot_tasks[next_j][-1])
+			# print Q
+		for r in range(rounds):
+			Q2 = copy.deepcopy(Q)
+			F[next_i][next_j] += Transfer(Q2, f_env)
+
+		y.append(F[next_i][next_j]/rounds)
+
+		D2 = np.asarray(D)
+		A = np.dot(np.transpose(D2), D2)
+		eigenValues,eigenVectors = np.linalg.eig(A)
+		idx = eigenValues.argmax()
+		max_eigenv = eigenVectors[:, idx]
+		[next_i, next_j] = FindNextPair(max_eigenv, pairs, pair_features)
+
+	# for i in range(no_tasks-1):
+	# 	for j in range(no_tasks):
+	# 		if(i == j):
+	# 			F[i][j] = 
+	# F = F / F.max(axis = 0)
+
+	# y = []
+	# for i in range(no_tasks-1):
+	# 	for j in range(no_tasks):
+	# 		if(i == j):
+	# 			continue
+	# 		y.append(F[i][j])
+	X = np.asarray(X)
 	y = np.asarray(y)
 	data = np.c_[X.reshape(len(X), -1), y.reshape(len(y), -1)]
 	np.random.shuffle(data)
 	X2 = data[:, :X.size//len(X)].reshape(X.shape)
 	y2 = data[:, X.size//len(X):].reshape(y.shape)
-	[X_train, X_test] = np.split(X2, [len(X2)-3])
-	[y_train, y_test] = np.split(y2, [len(y2)-3])
+	[X_train, X_test] = np.split(X2, [len(X2)-8])
+	[y_train, y_test] = np.split(y2, [len(y2)-8])
 
 	clf = linear_model.LinearRegression()
 	# clf = linear_model.Ridge (alpha = .1)
@@ -180,20 +234,20 @@ if __name__ == "__main__":
 	print (predict_test, y_test)
 
 	plt.figure(3)
-	plt.scatter(X2[:,2], y2, color='red')
+	plt.scatter(X2[:,0], y2, color='red')
 	# fig = plt.figure(3)
 	# ax = fig.add_subplot(111, projection='3d')
 	# ax.scatter(X2[:,0], X2[:,1], y2, color='red')
 	predict_train = clf.predict(X_train)
-	# plt.scatter(X_train[:,1], predict_train, color='blue')
-	# plt.scatter(X_test[:,1], predict_test, color='magenta')
+	plt.scatter(X_train[:,0], predict_train, color='blue')
+	plt.scatter(X_test[:,0], predict_test, color='magenta')
 
 	predict = clf.predict(X2)
-	# for i in range(len(X2)):
-	# 	plt.plot([X2[i][1], X2[i][1]], [y2[i], predict[i]], color='green')
-	plt.savefig('F_model/model.png')
+	for i in range(len(X2)):
+		plt.plot([X2[i][0], X2[i][0]], [y2[i], predict[i]], color='green')
+	plt.savefig('active_F_model/model.png')
 
 	plt.figure(2)
 	plt.imshow(F, interpolation='none', cmap='gray')
-	plt.savefig('F_model/F.png')
+	plt.savefig('active_F_model/F.png')
 
