@@ -38,7 +38,10 @@ def learntask(task, Q, grid_size, epsilon = 0.3, alpha = 0.6, discount = 0.9):
 			if np.random.rand() <= epsilon:
 				action = np.random.randint(0, num_actions)
 			else:
-				action = np.argmax(Q[curr_state[0]][curr_state[1]])
+				if(max(Q[curr_state[0]][curr_state[1]]) == min(Q[curr_state[0]][curr_state[1]])):
+					action = -1#np.random.randint(0, num_actions)
+				else:
+					action = np.argmax(Q[curr_state[0]][curr_state[1]])
 			next_state, reward, game_over = env.act(action)
 			step += 1
 			# Q-learning update
@@ -79,7 +82,10 @@ def learnTtask(perm, task, Q, grid_size, tot_step, epsilon = 0.3, alpha = 0.6, d
 			if np.random.rand() <= epsilon:
 				action = np.random.randint(0, num_actions)
 			else:
-				action = np.argmax(Q[curr_state[0]][curr_state[1]])
+				if(max(Q[curr_state[0]][curr_state[1]]) == min(Q[curr_state[0]][curr_state[1]])):
+					action = -1#np.random.randint(0, num_actions)
+				else:
+					action = np.argmax(Q[curr_state[0]][curr_state[1]])
 			next_state, reward, game_over = env.act(action)
 			tot_reward += reward
 			step += 1
@@ -139,15 +145,20 @@ if __name__ == "__main__":
 		print ('perm no. %d' % perm)
 		Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
 		tot_step = 0
+		task_num = 0
 		for task in T:
-			[Q, step] = learntask(task, Q, grid_size)
+			task_num += 1
+			if(task_num == 0):
+				[Q, step] = learntask(task, Q, grid_size, alpha = 0.4)
+			else:
+				[Q, step] = learntask(task, Q, grid_size, alpha = 1.0)
 			tot_step += step
 
-		Q = learnTtask(perm, target_task, Q, grid_size, tot_step)
+		Q = learnTtask(perm, target_task, Q, grid_size, tot_step, alpha = 0.999)
 		plot_policy(perm, Q)
 
 	# BASELINE
 	print ('baseline')
 	Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
-	Q = learnTtask(0, target_task, Q, grid_size, 0)
+	Q = learnTtask(0, target_task, Q, grid_size, 0, alpha = 0.4)
 	plot_policy(0, Q)

@@ -30,7 +30,9 @@ class Maze(object):
 		plt.savefig(path + "%d_%d_%d.png" % (num1, num2, num3))
 
 	def act(self, action):
-		if(action == 0):
+		if(action == -1):
+			self.next_state = self.curr_state
+		elif(action == 0):
 			self.next_state = [self.curr_state[0]-1,self.curr_state[1]]
 		elif(action == 1):
 			self.next_state = [self.curr_state[0]+1,self.curr_state[1]]
