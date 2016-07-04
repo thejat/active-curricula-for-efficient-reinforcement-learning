@@ -5,6 +5,7 @@ import random
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn import linear_model
+from numpy import linalg as LA
 
 def change(Q1, Q2, env):
 	thres = 0.0 
@@ -67,7 +68,7 @@ def learn_source(task_num, s_env, epsilon = 0.3, alpha = 0.6, discount = 0.9):
 	plt.savefig("F_model/policies/source_policy%d.png" % task_num)
 	return Q
 
-def Transfer(Q, f_env, f_step = 300, epsilon = 0.3, alpha = 0.01, discount = 0.9):
+def Transfer(Q, f_env, f_step = 500, epsilon = 0.3, alpha = 1.0, discount = 0.9):
 
 	## Learning final task
 	num_actions = f_env.num_actions
@@ -158,7 +159,8 @@ if __name__ == "__main__":
 				Q2 = copy.deepcopy(Q)
 				F[Ts][Tf] += Transfer(Q2, f_env)
 
-	F = F / F.max(axis = 0)
+	F = F/LA.norm(F)
+	print (F)
 
 	y = []
 	for i in range(no_tasks-1):
@@ -180,17 +182,17 @@ if __name__ == "__main__":
 	print (predict_test, y_test)
 
 	plt.figure(3)
-	plt.scatter(X2[:,2], y2, color='red')
+	plt.scatter(X2[:,0], y2, color='red')
 	# fig = plt.figure(3)
 	# ax = fig.add_subplot(111, projection='3d')
 	# ax.scatter(X2[:,0], X2[:,1], y2, color='red')
 	predict_train = clf.predict(X_train)
-	# plt.scatter(X_train[:,1], predict_train, color='blue')
-	# plt.scatter(X_test[:,1], predict_test, color='magenta')
+	plt.scatter(X_train[:,0], predict_train, color='blue')
+	plt.scatter(X_test[:,0], predict_test, color='magenta')
 
 	predict = clf.predict(X2)
-	# for i in range(len(X2)):
-	# 	plt.plot([X2[i][1], X2[i][1]], [y2[i], predict[i]], color='green')
+	for i in range(len(X2)):
+		plt.plot([X2[i][0], X2[i][0]], [y2[i], predict[i]], color='green')
 	plt.savefig('F_model/model.png')
 
 	plt.figure(2)

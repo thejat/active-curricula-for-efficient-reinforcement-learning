@@ -19,7 +19,7 @@ def change(Q1, Q2, env):
 def learnTask(task_num, Q, task, tau = -1, epsilon = 0.3, alpha = 0.6, discount = 0.9):
 	grid_size = len(Q)
 	env = Maze(grid_size, task[:-1], task[-1])
-	env.draw("greedy_max/tasks/", task_num)
+	# env.draw("greedy_max/tasks/", task_num)
 	num_actions = env.num_actions
 	## Learning source task
 	step = 0
@@ -57,12 +57,12 @@ def learnTask(task_num, Q, task, tau = -1, epsilon = 0.3, alpha = 0.6, discount 
 				break
 		else:
 			not_change_count = 0
-	print ('Exceed: %d/%d' % (exceed, episode))
-	policy =  [[max(Q[i][j]) for i in range(grid_size)] for j in range(grid_size)]
-	plt.figure(1)
-	plt.clf()
-	plt.imshow(policy, interpolation='none', cmap='gray')
-	plt.savefig("greedy_max/policies/source_policy%d.png" % task_num)
+	# print ('Exceed: %d/%d' % (exceed, episode))
+	# policy =  [[max(Q[i][j]) for i in range(grid_size)] for j in range(grid_size)]
+	# plt.figure(1)
+	# plt.clf()
+	# plt.imshow(policy, interpolation='none', cmap='gray')
+	# plt.savefig("greedy_max/policies/source_policy%d.png" % task_num)
 	return [Q, step]
 
 def plotlearnTask(Q, task, first_step, tau = -1, epsilon = 0.3, alpha = 0.6, discount = 0.9):
@@ -112,28 +112,28 @@ def plotlearnTask(Q, task, first_step, tau = -1, epsilon = 0.3, alpha = 0.6, dis
 				break
 		else:
 			not_change_count = 0
-	print ('Exceed: %d/%d' % (exceed, episode))
+	# print ('Exceed: %d/%d' % (exceed, episode))
 	policy =  [[max(Q[i][j]) for i in range(grid_size)] for j in range(grid_size)]
 	plt.figure(1)
 	plt.clf()
 	plt.imshow(policy, interpolation='none', cmap='gray')
 	if first_step:
 		first_step = 1
-	plt.savefig("greedy_max/policies/target_policy%d.png" % first_step)
+	# plt.savefig("greedy_max/policies/target_policy%d.png" % first_step)
 
-	print('plotting')
-	plt.figure(2)
-	plt.plot(s_list, r_list)
-	# plt.xscale('log')
+	# print('plotting')
+	# plt.figure(2)
+	# plt.plot(s_list, r_list)
+	# # plt.xscale('log')
+	# # plt.yscale('log')
+	# plt.savefig('greedy_max/resutl_1.png')
+	# print ('done')
+	# print('plotting')
+	# plt.figure(3)
+	# plt.plot(s_list, r_list)
 	# plt.yscale('log')
-	plt.savefig('greedy_max/resutl_1.png')
-	print ('done')
-	print('plotting')
-	plt.figure(3)
-	plt.plot(s_list, r_list)
-	plt.yscale('log')
-	plt.savefig('greedy_max/resutl_2.png')
-	print ('done')
+	# plt.savefig('greedy_max/resutl_2.png')
+	# print ('done')
 
 	return step
 
@@ -178,42 +178,52 @@ def findTask(Q, subtasks):
 		if(reward > max_reward):
 			max_reward = reward
 			retTask = task
-	print (reward_list)
+	# print (reward_list)
 	return [retTask, tot_step]
 
 if __name__ == "__main__":
 
 	grid_size = 7
 	# subtasks = [[[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ]], [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ]], [[ 3,6 ] , [ 4,6 ] , [ 5,6 ] , [ 6,6 ]], [[ 3,6 ] , [ 4,6 ] , [ 5,6 ] , [ 6,6 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ]], [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 3,6 ] , [ 4,6 ] , [ 5,6 ] , [ 6,6 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ]]]
-	subtasks = [[[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ]], [[ 0,0 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 4,0 ]], [[ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ]], [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ]]]
+	Subtasks = [[[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ]], [[ 0,0 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 4,0 ]], [[ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ]], [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ]]]
 	# random.shuffle(subtasks)
 	# target_task = [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 3,6 ] , [ 4,6 ] , [ 5,6 ] , [ 6,6 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ] , [ 4,3 ] , [ 4,4 ]]
 	target_task = [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ] , [ 4,3 ] , [ 4,4 ]]
 
-	Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
+	Rounds = 50
+	curr_step = 0
+	base_step = 0
+	for Round in range(Rounds):
+		print ("Round no. %d" % Round)
+		subtasks = copy.deepcopy(Subtasks)
+		Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
+		tot_step = 0
+		task_num = 1
+		first_task = 1
+		curr = []
+		while len(subtasks) != 0:
+			[task, tstep] = findTask(Q, subtasks)
+			curr.append(Subtasks.index(task))
+			tot_step += tstep
+			if(first_task):
+				[Q, step] = learnTask(task_num, Q, task, alpha = 0.4)
+				first_task = 0
+			else:
+				[Q, step] = learnTask(task_num, Q, task, alpha = 1.0)
+			tot_step += step
+			subtasks.remove(task)
+			task_num += 1
 
-	tot_step = 0
-	task_num = 1
+		print(curr)
+		step = plotlearnTask(Q, target_task, tot_step, alpha = 0.999)
+		tot_step = step
+		print ("curr: %d" %tot_step)
+		curr_step += tot_step
 
-	first_task = 1
-	while len(subtasks) != 0:
-		[task, tstep] = findTask(Q, subtasks)
-		tot_step += tstep
-		if(first_task):
-			[Q, step] = learnTask(task_num, Q, task, alpha = 0.4)
-			first_task = 0
-		else:
-			[Q, step] = learnTask(task_num, Q, task, alpha = 1.0)
-		tot_step += step
-		subtasks.remove(task)
-		task_num += 1
+		Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
+		step2 = plotlearnTask(Q, target_task, 0, alpha = 0.4)
+		print ("base: %d" %step2)
+		base_step += step2
 
-	print (tot_step)
-
-	step = plotlearnTask(Q, target_task, tot_step, alpha = 0.999)
-
-	tot_step += step
-
-	Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
-
-	step2 = plotlearnTask(Q, target_task, 0, tot_step, alpha = 0.4)
+	print (curr_step/Rounds)
+	print (base_step/Rounds)
