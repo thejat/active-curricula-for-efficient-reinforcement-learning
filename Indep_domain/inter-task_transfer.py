@@ -119,7 +119,7 @@ def Transfer2(Q, f_env, epsilon = 0.1, alpha = 1, discount = 0.9):
 	print (tot_reward, step)
 	return 1.0/step
 
-def Transfer(Q, f_env, f_step = 800, epsilon = 0.2, alpha = 1.0, discount = 0.9):
+def Transfer(Q, f_env, f_step = 500, epsilon = 0.3, alpha = 1.0, discount = 0.9):
 
 	## Learning final task
 	num_actions = f_env.num_actions
@@ -169,6 +169,7 @@ if __name__ == "__main__":
 	no_tasks = len(tot_tasks)
 
 	Rounds = 50
+	rounds = 20
 	curr = []
 	tot_F = 0
 	for Round in range(Rounds):
@@ -185,11 +186,17 @@ if __name__ == "__main__":
 					F[Ts][Tf] = -1000
 					transfer_step[Ts][Tf] = 0
 				else:
-					print ("Task pair: (%d,%d)" % (Ts, Tf))
+					# print ("Task pair: (%d,%d)" % (Ts, Tf))
 					f_env = Maze(gridsize, tot_tasks[Tf][:-1], tot_tasks[Tf][-1])
 					# print Q
-					Q2 = copy.deepcopy(Q)
-					[F[Ts][Tf], transfer_step[Ts][Tf]] = Transfer(Q2, f_env)
+					F[Ts][Tf] = 0 
+					transfer_step[Ts][Tf] = 0
+					for r in range(rounds):
+						Q2 = copy.deepcopy(Q)
+						[F_reward, trans_step] = Transfer(Q2, f_env)
+						F[Ts][Tf] += F_reward 
+						transfer_step[Ts][Tf] += trans_step
+					F[Ts][Tf] /= rounds 
 
 		# plt.figure(2)
 		# plt.imshow(F, interpolation='none', cmap='gray')

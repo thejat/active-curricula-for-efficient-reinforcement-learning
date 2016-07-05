@@ -65,7 +65,7 @@ def learn_source(task_num, s_env, epsilon = 0.3, alpha = 0.6, discount = 0.9):
 	plt.clf()
 	plt.imshow(policy, interpolation='none', cmap='gray')
 	plt.savefig("active_F_model/policies/source_policy%d.png" % task_num)
-	return Q
+	return [Q, step]
 
 def Transfer(Q, f_env, f_step = 500, epsilon = 0.3, alpha = 1.0, discount = 0.9):
 
@@ -93,7 +93,7 @@ def Transfer(Q, f_env, f_step = 500, epsilon = 0.3, alpha = 1.0, discount = 0.9)
 			step += 1
 			# Q-learning update
 			Q[curr_state[0]][curr_state[1]][action] = Q[curr_state[0]][curr_state[1]][action] + alpha*(reward + discount*max(Q[next_state[0]][next_state[1]]) - Q[curr_state[0]][curr_state[1]][action])
-	return tot_reward
+	return [tot_reward, step]
 
 def FindNextPair(max_eigenv, pairs, pair_features):
 	max_sim = 0
@@ -163,7 +163,7 @@ if __name__ == "__main__":
 	tot_tasks = copy.deepcopy(subtasks)
 	tot_tasks.append(target_task)
 	# F = np.zeros((no_tasks-1, no_tasks))
-	rounds = 20
+	rounds = 1
 
 	# pairs = []
 	# for i in range(no_tasks-1):
@@ -176,11 +176,13 @@ if __name__ == "__main__":
 	# D = []
 	# next_i = 0#np.random.randint(0, no_tasks-1)
 	# next_j = 1#np.random.randint(0, no_tasks)
-
+	avg_total = 0
+	total_steps_F = 0
 	for next_i1 in range(no_tasks-1):
 		for next_j1 in range(no_tasks):
+			
 			if(next_i1 != next_j1):
-
+				avg_total += 1
 				X = []
 				y = []
 				pairs = []
@@ -205,15 +207,16 @@ if __name__ == "__main__":
 					X[-1].append(pair_features[next_i][next_j][2])
 
 					s_env = Maze(gridsize, tot_tasks[next_i][:-1], tot_tasks[next_i][-1])
-					Q = learn_source(next_i, s_env)
-
+					[Q, step] = learn_source(next_i, s_env)
+					total_steps_F += step
 					# print ("Task pair: (%d,%d)" % (next_i, next_j))
 					f_env = Maze(gridsize, tot_tasks[next_j][:-1], tot_tasks[next_j][-1])
 
 					for r in range(rounds):
 						Q2 = copy.deepcopy(Q)
-						F[next_i][next_j] += Transfer(Q2, f_env)
-
+						[F_reward, step] = Transfer(Q2, f_env)
+						F[next_i][next_j] += F_reward
+						total_steps_F += step
 					y.append([F[next_i][next_j]/rounds, next_i, next_j])
 
 					D2 = np.asarray(D)
@@ -267,6 +270,7 @@ if __name__ == "__main__":
 				# plt.imshow(F, interpolation='none', cmap='gray')
 				# plt.savefig('active_F_model/active_F.png')
 				printCurrculum(F, no_tasks)
+				print (total_steps_F/avg_total)
 
 
 
