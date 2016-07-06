@@ -176,7 +176,7 @@ if __name__ == "__main__":
 			pair_features[i][j].append(1.0*x/len(tot_tasks[j]))
 			pair_features[i][j].append(1)
 
-	print (pair_features)
+	# print (pair_features)
 	
 	pair_features = np.asarray(pair_features)
 	# X = []
@@ -193,6 +193,10 @@ if __name__ == "__main__":
 		for next_j1 in range(no_tasks):
 			
 			if(next_i1 != next_j1):
+				source_learned = []
+				source_Q = {}
+				active_steps = [ [0 for i in range(no_tasks)] for j in range(no_tasks-1) ]
+				active_pairs = []
 				model_no += 1
 				avg_total += 1
 				X = []
@@ -211,6 +215,7 @@ if __name__ == "__main__":
 				print(next_i, next_j)
 
 				while len(D) != num_inputs - 1:
+					active_pairs.append([next_i, next_j])
 					pairs.remove([next_i, next_j])
 					D.append(pair_features[next_i][next_j])
 					X.append([])
@@ -218,9 +223,15 @@ if __name__ == "__main__":
 					X[-1].append(pair_features[next_i][next_j][1])
 					# X[-1].append(pair_features[next_i][next_j][2])
 
-					s_env = Maze(gridsize, tot_tasks[next_i][:-1], tot_tasks[next_i][-1])
-					[Q, step] = learn_source(next_i, s_env)
-					total_steps_F += step
+					if(next_i not in source_learned): 
+						s_env = Maze(gridsize, tot_tasks[next_i][:-1], tot_tasks[next_i][-1])
+						[Q, step] = learn_source(next_i, s_env)
+						total_steps_F += step
+						source_learned.append(next_i)
+						source_Q[next_i] = [Q, step]
+						active_steps[next_i][next_j] += step
+					else:
+						[Q, step] = source_Q[next_i]
 					# print ("Task pair: (%d,%d)" % (next_i, next_j))
 					f_env = Maze(gridsize, tot_tasks[next_j][:-1], tot_tasks[next_j][-1])
 
@@ -228,6 +239,7 @@ if __name__ == "__main__":
 						Q2 = copy.deepcopy(Q)
 						[F_reward, step] = Transfer(Q2, f_env)
 						F[next_i][next_j] += F_reward
+						active_steps[next_i][next_j] += step
 						total_steps_F += step
 					F[next_i][next_j] /= rounds
 					y.append([F[next_i][next_j], next_i, next_j])
@@ -242,20 +254,21 @@ if __name__ == "__main__":
 					max_eigenv = eigenVectors[:, idx]
 					[next_i, next_j] = FindNextPair(max_eigenv, pairs, pair_features)
 
-				print (F)
+				# print (F)
 				F = F/LA.norm(F)
-				print (F)
+				# print (F)
 				printCurrculum(F, no_tasks)
 				X = np.asarray(X)
 				y = np.asarray(y)
 				y[:,0] = y[:,0]/LA.norm(y[:,0])
-				data = np.c_[X.reshape(len(X), -1), y.reshape(len(y), -1)]
+				# data = np.c_[X.reshape(len(X), -1), y.reshape(len(y), -1)]
 				# np.random.shuffle(data)
-				X2 = data[:, :X.size//len(X)].reshape(X.shape)
-				y2 = data[:, X.size//len(X):].reshape(y.shape)
-				[X_train, X_test] = np.split(X2, [len(X2)-50])
-				[y_train, y_test] = np.split(y2, [len(y2)-50])
-
+				# X2 = data[:, :X.size//len(X)].reshape(X.shape)
+				# y2 = data[:, X.size//len(X):].reshape(y.shape)
+				[X_train, X_test] = np.split(X, [len(X)-48])
+				[y_train, y_test] = np.split(y, [len(y)-48])
+				print (len(X))
+				print (len(X_train), len(X_test))
 				clf = linear_model.LinearRegression()
 				# clf = linear_model.Ridge (alpha = .1)
 				clf.fit(X_train, y_train[:,0])
@@ -264,15 +277,15 @@ if __name__ == "__main__":
 
 				plt.figure(3)
 				plt.clf()
-				plt.scatter(X2[:,0], y2[:,0], color='red')
+				plt.scatter(X[:,0], y[:,0], color='red')
 				predict_train = clf.predict(X_train)
 				plt.scatter(X_train[:,0], predict_train, color='blue')
 				plt.scatter(X_test[:,0], predict_test, color='magenta')
 
-				predict = clf.predict(X2)
-				for i in range(len(X2)):
-					plt.plot([X2[i][0], X2[i][0]], [y2[i][0], predict[i]], color='green')
-				plt.savefig('active_F_model/model2_%d.png' % model_no)
+				predict = clf.predict(X)
+				for i in range(len(X)):
+					plt.plot([X[i][0], X[i][0]], [y[i][0], predict[i]], color='green')
+				plt.savefig('active_F_model/model1_%d.png' % model_no)
 
 				# plt.figure(2)
 				# plt.imshow(F, interpolation='none', cmap='gray')
@@ -288,7 +301,13 @@ if __name__ == "__main__":
 				# plt.imshow(F, interpolation='none', cmap='gray')
 				# plt.savefig('active_F_model/active_F.png')
 				printCurrculum(F, no_tasks)
-				print (total_steps_F/avg_total)
+				# print (total_steps_F/avg_total)
+				tot_active_steps = 0
+				for i in range(15):
+					# print (active_pairs[i][0], active_pairs[i][1])
+					# print (active_steps[active_pairs[i][0]][active_pairs[i][1]])
+					tot_active_steps += active_steps[active_pairs[i][0]][active_pairs[i][1]]
+				print (tot_active_steps)
 
 
 

@@ -1,0 +1,15 @@
+Script started on Wednesday 06 July 2016 05:16:48 PM IST
+]0;vikas@INDXRCI01SPH02: ~/X/maze_rl_2/Dep_domainvikas@INDXRCI01SPH02:~/X/maze_rl_2/Dep_domain$ python active_F_model_2.py
+
+
+(0, 1)
+Traceback (most recent call last):
+  File "active_F_model_2.py", line 255, in <module>
+    [next_i, next_j] = FindNextPair(max_eigenv, pairs, pair_features)
+  File "active_F_model_2.py", line 108, in FindNextPair
+    return [next_i, next_j]
+UnboundLocalError: local variable 'next_i' referenced before assignment
+]0;vikas@INDXRCI01SPH02: ~/X/maze_rl_2/Dep_domainvikas@INDXRCI01SPH02:~/X/maze_rl_2/Dep_domain$ exit
+exit
+
+Script done on Wednesday 06 July 2016 05:21:08 PM IST
