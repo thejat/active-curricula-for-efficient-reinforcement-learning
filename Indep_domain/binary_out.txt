@@ -1,0 +1,252 @@
+('total no. of tasks: ', 9)
+1
+target task
+baseline
+17995
+32687
+1
+target task
+baseline
+12167
+26166
+1
+target task
+baseline
+15579
+31185
+1
+target task
+baseline
+12314
+27356
+1
+target task
+baseline
+12418
+25393
+1
+target task
+baseline
+12889
+20695
+1
+target task
+baseline
+15640
+22521
+1
+target task
+baseline
+13172
+34192
+1
+target task
+baseline
+14973
+36676
+1
+target task
+baseline
+11815
+44731
+1
+target task
+baseline
+14881
+29051
+1
+target task
+baseline
+12537
+25763
+1
+target task
+baseline
+13216
+35130
+1
+target task
+baseline
+13112
+28100
+1
+target task
+baseline
+17189
+24557
+1
+target task
+baseline
+17710
+25076
+1
+target task
+baseline
+13074
+30328
+1
+target task
+baseline
+12805
+23086
+1
+target task
+baseline
+11270
+30814
+1
+target task
+baseline
+11969
+23652
+1
+target task
+baseline
+15737
+40670
+1
+target task
+baseline
+13887
+28433
+1
+target task
+baseline
+14935
+33916
+1
+target task
+baseline
+12164
+30300
+1
+target task
+baseline
+13072
+26216
+1
+target task
+baseline
+13149
+35856
+1
+target task
+baseline
+11340
+32177
+1
+target task
+baseline
+11453
+25881
+1
+target task
+baseline
+15447
+29698
+1
+target task
+baseline
+12827
+24284
+1
+target task
+baseline
+13052
+36186
+1
+target task
+baseline
+11333
+35706
+1
+target task
+baseline
+19897
+36508
+1
+target task
+baseline
+12875
+32912
+1
+target task
+baseline
+11853
+31029
+1
+target task
+baseline
+12421
+37744
+1
+target task
+baseline
+16870
+29479
+1
+target task
+baseline
+16396
+33420
+1
+target task
+baseline
+13931
+28278
+1
+target task
+baseline
+11633
+27356
+1
+target task
+baseline
+11938
+25324
+1
+target task
+baseline
+13098
+27453
+1
+target task
+baseline
+12650
+30035
+1
+target task
+baseline
+13408
+27944
+1
+target task
+baseline
+12845
+27730
+1
+target task
+baseline
+14082
+34617
+1
+target task
+baseline
+19310
+37361
+1
+target task
+baseline
+12232
+28182
+1
+target task
+baseline
+14228
+27388
+1
+target task
+baseline
+15208
+32348
+(13799, 30231)

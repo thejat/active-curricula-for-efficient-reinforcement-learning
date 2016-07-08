@@ -20,7 +20,8 @@ def change(Q1, Q2, env):
 
 def learntask(perm, task_num, task, Q, grid_size, epsilon = 0.3, alpha = 0.6, discount = 0.9):
 	env = Maze(grid_size, task[:-1], task[-1])
-	# env.draw("verify/tasks/", perm, task_num)
+	# if(task_num == 1):
+	# 	env.draw("verify/tasks/", perm, task_num)
 	num_actions = env.num_actions
 	step = 0
 	episode = 0
@@ -152,45 +153,50 @@ if __name__ == "__main__":
 	print (no_tasks)
 	all_steps = [0 for i in range(fact(no_tasks-1)+1)]
 	print (len(all_steps))
-	Rounds = 5
+	Rounds = 1
 	for Round in range(Rounds):
 		print("Round no. %d" % (Round+1))
 		perm = 0
+		ind = 0
 		for T in itertools.permutations(subtasks):
 			perm += 1
-			print ('perm no. %d' % perm)
-			Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
-			tot_step = 0
-			task_num = 0
-			for task in T:
-				task_num += 1
-				if(task_num == 1):
-					[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 0.4)
-				else:
-					[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 1.0)
-				tot_step += step
-			# print(tot_step)
-			[Q, tot_step] = learnTtask(perm, target_task, Q, grid_size, tot_step, alpha = 0.999)
-			# print(tot_step)
-			all_steps[perm-1] += tot_step
-			print(tot_step)
-			if(perm%1000 == 1):
-				plot_policy(perm, Q)
+			if(perm%1 == 0):
+				print ('perm no. %d' % perm)
+				Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
+				tot_step = 0
+				task_num = 0
+				for task in T:
+					task_num += 1
+					if(task_num == 1):
+						[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 0.4)
+						print (step)
+					else:
+						[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 1.0)
+					tot_step += step
+				# print(tot_step)
+				[Q, tot_step] = learnTtask(perm, target_task, Q, grid_size, tot_step, alpha = 0.999)
+				# print(tot_step)
+				all_steps[ind] += tot_step
+				ind += 1
+				print(tot_step)
+			
+				# plot_policy(perm, Q)
 
 		# BASELINE
 		print ('baseline')
 		Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
 		[Q, tot_step] = learnTtask(0, target_task, Q, grid_size, 0, alpha = 0.4)
-		all_steps[perm] += tot_step
-		print (all_steps)
-		with open("verify.csv", "a") as fp:
+		all_steps[ind] += tot_step
+		print (all_steps[0:ind+1])
+		with open("verify2.csv", "a") as fp:
 		    wr = csv.writer(fp)
-		    wr.writerow(all_steps)
-		plot_policy(0, Q)
+		    for i in all_steps:
+		    	wr.writerow([i])
+		# plot_policy(0, Q)
 
-	all_steps[:] = [x/Rounds for x in all_steps] 
-	with open("verify.csv", "a") as fp:
-	    wr = csv.writer(fp)
-	    wr.writerow(all_steps)
-	print (all_steps)
+	# all_steps[:ind+1] = [x/Rounds for x in all_steps[0:ind+1]] 
+	# with open("verify2.csv", "a") as fp:
+	#     wr = csv.writer(fp)
+	#     wr.writerow(all_steps[0:ind+1])
+	# print (all_steps[0:ind+1])
 	
