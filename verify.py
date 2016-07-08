@@ -153,7 +153,7 @@ if __name__ == "__main__":
 	print (no_tasks)
 	all_steps = [0 for i in range(fact(no_tasks-1)+1)]
 	print (len(all_steps))
-	Rounds = 1
+	Rounds = 50
 	for Round in range(Rounds):
 		print("Round no. %d" % (Round+1))
 		perm = 0
@@ -161,7 +161,7 @@ if __name__ == "__main__":
 		for T in itertools.permutations(subtasks):
 			perm += 1
 			if(perm%1 == 0):
-				print ('perm no. %d' % perm)
+				# print ('perm no. %d' % perm)
 				Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
 				tot_step = 0
 				task_num = 0
@@ -188,10 +188,10 @@ if __name__ == "__main__":
 		[Q, tot_step] = learnTtask(0, target_task, Q, grid_size, 0, alpha = 0.4)
 		all_steps[ind] += tot_step
 		print (all_steps[0:ind+1])
-		with open("verify2.csv", "a") as fp:
+		with open("verify3.csv", "w") as fp:
 		    wr = csv.writer(fp)
 		    for i in all_steps:
-		    	wr.writerow([i])
+		    	wr.writerow([i/(Round+1)])
 		# plot_policy(0, Q)
 
 	# all_steps[:ind+1] = [x/Rounds for x in all_steps[0:ind+1]] 
