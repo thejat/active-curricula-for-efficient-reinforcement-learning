@@ -138,7 +138,7 @@ def plotlearnTask(Q, task, first_step, tau = -1, epsilon = 0.3, alpha = 0.6, dis
 	return step
 
 def EvalTask(Q, task, tau = 500, epsilon = 0.3, alpha = 1.0, discount = 0.9):
-	repeat_no = 3
+	repeat_no = 1
 	env = Maze(len(Q), task[:-1], task[-1])
 	num_actions = env.num_actions
 	step = 0
@@ -208,6 +208,7 @@ if __name__ == "__main__":
 		curr = []
 		while len(subtasks) != 0:
 			[task, tstep] = findTask(Q, subtasks)
+			print ('eval: %d' % tstep)
 			curr.append(Subtasks.index(task))
 			tot_step += tstep
 			if(first_task):
@@ -220,7 +221,7 @@ if __name__ == "__main__":
 			task_num += 1
 
 		print(curr)
-		step = plotlearnTask(Q, target_task, tot_step, alpha = 0.999)
+		step = plotlearnTask(Q, target_task, tot_step, alpha = 1.0)
 		tot_step = step
 		print ("curr: %d" %tot_step)
 		curr_step += tot_step
