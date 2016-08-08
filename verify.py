@@ -175,13 +175,13 @@ if __name__ == "__main__":
 				for task in T:
 					task_num += 1
 					if(task_num == 1):
-						[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 0.6)
+						[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 0.4)
 						# print (step)
 					else:
-						[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 0.6)
+						[Q, step] = learntask(perm, task_num, task, Q, grid_size, alpha = 0.4)
 					tot_step += step
 				# print(tot_step)
-				[Q, tot_step] = learnTtask(perm, target_task, Q, grid_size, tot_step, alpha = 0.6)
+				[Q, tot_step] = learnTtask(perm, target_task, Q, grid_size, tot_step, alpha = 0.4)
 				# print(tot_step)
 				all_steps[ind] += tot_step
 				ind += 1
@@ -192,7 +192,7 @@ if __name__ == "__main__":
 		# BASELINE
 		print ('baseline')
 		Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
-		[Q, tot_step] = learnTtask(0, target_task, Q, grid_size, 0, alpha = 0.6)
+		[Q, tot_step] = learnTtask(0, target_task, Q, grid_size, 0, alpha = 0.4)
 		all_steps[ind] += tot_step
 		print (all_steps[0:ind+1])
 		with open("verify_new_subtasks.csv", "w") as fp:

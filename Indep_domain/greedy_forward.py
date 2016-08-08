@@ -137,7 +137,7 @@ def plotlearnTask(Q, task, first_step, tau = -1, epsilon = 0.3, alpha = 0.6, dis
 
 	return step
 
-def EvalTask(Q, task, tau = 500, epsilon = 0.3, alpha = 1.0, discount = 0.9):
+def EvalTask(Q, task, tau = 500, epsilon = 0.3, alpha = 0.6, discount = 0.9):
 	repeat_no = 1
 	env = Maze(len(Q), task[:-1], task[-1])
 	num_actions = env.num_actions
