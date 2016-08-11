@@ -1,16 +1,18 @@
 from math import radians 
 import math
 import numpy as np
+from copy import deepcopy
 #from RandomArray import *
 from RLBasic import *
 #import psyco
 #psyco.full()
 
-
-
-
 class MountainCar(RLBase):
    
+    def __init__(self, start, goal, tQ):
+        RLBase.__init__(self, tQ)
+        self.start = start
+        self.goal = goal
 
     def BuildActionList(self):
         return np.array([-1.0 , 0.0 , 1.0])
@@ -36,6 +38,19 @@ class MountainCar(RLBase):
                 
         return np.array(states)
 
+    def BuildQTable(self):
+        nstates     = self.statelist.shape[0]
+        nactions    = self.actionlist.shape[0]
+        if self.tQ == 0:
+            Q = [[0.0 for i in range(nactions)] for i in range(nstates)]
+            # print(len(Q), len(Q[0]))
+        else:
+            Q = deepcopy(self.tQ)
+        return Q
+
+    def retQTable(self):
+        return self.Q
+
     def GetReward(self, x ):
         # MountainCarGetReward returns the reward at the current state
         # x: a vector of position and velocity of the car
@@ -44,7 +59,7 @@ class MountainCar(RLBase):
             
         position = x[0]
         # bound for position; the goal is to reach position = 0.45
-        bpright  = 0.45
+        bpright  = self.goal
 
         r = -1
         f = False
@@ -93,15 +108,16 @@ class MountainCar(RLBase):
 
 
     def GetInitialState(self):
-        initial_position = -0.5
-        initial_speed    =  0.0    
+        initial_position = self.start[0]
+        initial_speed    =  self.start[1]
         return  np.array([initial_position,initial_speed])
         
-  
-
-
 def MountainCarDemo(maxepisodes):
-    MC  = MountainCar()
+    start = [-0.5, 0.0]
+    goal = 0.45
+    # tQ = 0
+    tQ = [[0.0 for i in range(3)] for i in range(66)]
+    MC  = MountainCar(start, goal, tQ)
     maxsteps = 1000
     grafica  = False
     

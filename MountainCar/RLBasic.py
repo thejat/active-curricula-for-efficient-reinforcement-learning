@@ -3,12 +3,12 @@ import math
 #from RandomArray import *
 class RLBase:
     
-    def __init__(self,alpha=0.3,gamma=1.0,epsilon=0.9):
+    def __init__(self,tQ = 0, alpha=0.3,gamma=0.6,epsilon=0.9):
         
         self.alpha       = alpha    #learning rate
         self.gamma       = gamma    #discount factor
         self.epsilon     = epsilon  #probability of a random action selection
-
+        self.tQ =tQ;
         self.statelist   = self.BuildSateList()     # the list of states
         self.actionlist  = self.BuildActionList()   # the list of actions        
         self.nactions    = self.actionlist.shape[0] # number of actions
@@ -25,10 +25,10 @@ class RLBase:
         # this is typically a combinatorial discretization of the input space
         return statelist
     
-    def BuildQTable(self):
-        nstates     = self.statelist.shape[0]
-        nactions    = self.actionlist.shape[0]
-        Q = [[0.0 for i in range(nactions)] for i in range(nstates)]
+    def __BuildQTable(self):
+        # nstates     = self.statelist.shape[0]
+        # nactions    = self.actionlist.shape[0]
+        # Q = [[0.0 for i in range(nactions)] for i in range(nstates)]
         return Q
 
 
