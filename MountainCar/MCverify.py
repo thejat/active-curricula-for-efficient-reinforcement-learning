@@ -1,8 +1,9 @@
 from MountainCarDemo import *
 from copy import deepcopy
+import sys
 
 def change(Q1, Q2):
-	thres = 0.0 
+	thres = 0.00001 
 	for i in range(len(Q1)):
 		prev_val = sum(Q1[i])
 		new_val = sum(Q2[i])
@@ -14,11 +15,8 @@ def change(Q1, Q2):
 			change = 0
 	return change
 
-if __name__ == "__main__":
-	
-	start = [-0.5, 0.0]
-	goal = 0.45
-	tQ = [[0.0 for i in range(3)] for i in range(66)]
+def learn( start, goal, tQ):
+
 	MC  = MountainCar(start, goal, tQ)
 	maxsteps = 1000
 	grafica  = False
@@ -34,7 +32,8 @@ if __name__ == "__main__":
 
 		Q_prev = deepcopy(MC.retQTable())
 		total_reward, steps = MC.SARSAEpisode(maxsteps, grafica)
-		print ('Espisode: ',tot_episodes,'  Steps:',steps,'  Reward:',str(total_reward),' epsilon: ',str(MC.epsilon))
+		sys.stdout.write ('\rEspisode: %4d Steps: %6d Reward %5d Epsilon: %0.3f' %(tot_episodes, steps, total_reward,MC.epsilon))
+		sys.stdout.flush()
 		MC.epsilon = MC.epsilon * 0.99	
 		Q = deepcopy(MC.retQTable())
 
@@ -48,7 +47,29 @@ if __name__ == "__main__":
 		else:
 			not_change_count = 0
 
-	print ('Total epsiodes: %d' %tot_episodes)
+	# print (Q_prev)
+
+	print ('\nTotal epsiodes: %d' %tot_episodes)
 	print ('Total steps: %d' %tot_steps)
 
+	return Q
 
+if __name__ == "__main__":
+
+	# position -1.5 to 0.55
+	# velocity -0.7 tp 0.7
+
+	# subtasks + target task
+	tasks = [[0.2, 0.0], [-0.5, 0.5], [-0.5, 0.0]]
+
+	start = tasks[0]
+	goal = 0.45
+	tQ = [[0.0 for i in range(3)] for i in range(66)]
+
+	Q = learn(start, goal, tQ)
+
+	tQ = Q
+	print (tQ)
+	start = tasks[2]
+	goal = 0.45
+	Qf = learn(start, goal, tQ)

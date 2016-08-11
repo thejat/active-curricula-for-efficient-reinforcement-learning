@@ -3,7 +3,7 @@ import math
 #from RandomArray import *
 class RLBase:
     
-    def __init__(self,tQ = 0, alpha=0.3,gamma=0.6,epsilon=0.9):
+    def __init__(self,tQ = 0, alpha=0.3,gamma=0.6,epsilon=0.3):
         
         self.alpha       = alpha    #learning rate
         self.gamma       = gamma    #discount factor
