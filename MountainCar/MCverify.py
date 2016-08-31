@@ -15,7 +15,7 @@ def change(Q1, Q2):
 			change = 0
 	return change
 
-def learn( start, goal, tQ):
+def learn( start, goal, tQ, budget = 100000):
 
 	MC  = MountainCar(start, goal, tQ)
 	maxsteps = 1000
@@ -28,29 +28,32 @@ def learn( start, goal, tQ):
 
 	tot_episodes = 0
 	tot_steps = 0
-	while(not stop):
+	tot_reward = 0
+	while(tot_steps < budget):
 
 		Q_prev = deepcopy(MC.retQTable())
-		total_reward, steps = MC.SARSAEpisode(maxsteps, grafica)
-		sys.stdout.write ('\rEspisode: %4d Steps: %6d Reward %5d Epsilon: %0.3f' %(tot_episodes, steps, total_reward,MC.epsilon))
+		reward, steps = MC.QLearningEpisode(maxsteps, grafica)
+		sys.stdout.write ('\rEspisode: %4d Steps: %6d Reward %5d Epsilon: %0.3f' %(tot_episodes, steps, reward, MC.epsilon))
 		sys.stdout.flush()
 		MC.epsilon = MC.epsilon * 0.99	
 		Q = deepcopy(MC.retQTable())
 
 		tot_episodes += 1
 		tot_steps += steps
+		tot_reward += reward
 
-		if not change(Q_prev, Q):
-			not_change_count += 1
-			if(not_change_count == change_no):
-				break
-		else:
-			not_change_count = 0
+		# if not change(Q_prev, Q):
+		# 	not_change_count += 1
+		# 	if(not_change_count == change_no):
+		# 		break
+		# else:
+		# 	not_change_count = 0
 
 	# print (Q_prev)
 
 	print ('\nTotal epsiodes: %d' %tot_episodes)
 	print ('Total steps: %d' %tot_steps)
+	print ('Total Reward: %d' %tot_reward)
 
 	return Q
 
@@ -62,14 +65,18 @@ if __name__ == "__main__":
 	# subtasks + target task
 	tasks = [[0.2, 0.0], [-0.5, 0.5], [-0.5, 0.0]]
 
+	# learning task
 	start = tasks[0]
 	goal = 0.45
 	tQ = [[0.0 for i in range(3)] for i in range(66)]
-
 	Q = learn(start, goal, tQ)
 
+	# target task with transfer
 	tQ = Q
-	print (tQ)
 	start = tasks[2]
 	goal = 0.45
 	Qf = learn(start, goal, tQ)
+
+	# target task alone
+	tQ = [[0.0 for i in range(3)] for i in range(66)]
+	Q = learn(start, goal, tQ)

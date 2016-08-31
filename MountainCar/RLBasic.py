@@ -3,7 +3,7 @@ import math
 #from RandomArray import *
 class RLBase:
     
-    def __init__(self,tQ = 0, alpha=0.3,gamma=0.6,epsilon=0.3):
+    def __init__(self,tQ = 0, alpha=0.3, gamma=0.6, epsilon=0.01):
         
         self.alpha       = alpha    #learning rate
         self.gamma       = gamma    #discount factor
@@ -64,7 +64,10 @@ class RLBase:
         #has structure  Q(states,actions)
         
         #a = argmax(self.Q[s,:].flat)
-        a  = np.argmax(self.Q[s])    
+        if(np.argmax(self.Q[s]) == np.argmin(self.Q[s])):
+            a  = np.random.randint(0,self.nactions) 
+        else:
+            a  = np.argmax(self.Q[s]) 
         return a
 
     def __GetReward(self, x):

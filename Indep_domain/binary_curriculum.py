@@ -35,19 +35,18 @@ if __name__ == "__main__":
 
 	# target_task = [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ] , [ 4,3 ] , [ 4,4 ]]
 
-	grid_size = 11
-	Subtasks = [[[ 1,7 ] , [ 0,7 ] , [ 0,6 ] , [ 0,5 ] , [ 0,4 ] , [ 0,3 ]], [[ 1,7 ] , [ 0,7 ] , [ 0,6 ] , [ 0,5 ] , [ 0,4 ] , [ 0,3 ] , [ 1,3 ] , [ 2,1 ] , [ 2,2 ] , [ 2,3 ]], [[ 1,7 ] , [ 0,7 ] , [ 0,6 ] , [ 0,5 ] , [ 0,4 ] , [ 0,3 ] , [ 1,3 ] , [ 2,1 ] , [ 2,2 ] , [ 2,3 ] , [ 2,4 ] , [ 3,8 ] , [ 3,7 ] , [ 3,6 ] , [ 3,5 ] , [ 3,4 ]], [[ 0,10 ] , [ 1,10 ] , [ 2,10 ] , [ 3,10 ] , [ 4,10 ] , [ 5,10 ]], [[ 1,7 ] , [ 0,7 ] , [ 0,6 ] , [ 0,5 ] , [ 0,4 ] , [ 0,3 ] , [ 1,3 ] , [ 2,1 ] , [ 2,2 ] , [ 2,3 ] , [ 2,4 ] , [ 3,8 ] , [ 3,7 ] , [ 3,6 ] , [ 3,5 ] , [ 3,4 ] , [ 4,4 ] , [ 0,10 ] , [ 1,10 ] , [ 2,10 ] , [ 3,10 ] , [ 4,10 ] , [ 5,10 ] , [ 5,9 ] , [ 5,8 ] , [ 5,7 ] , [ 5,6 ] , [ 5,5 ] , [ 5,4 ]], [[ 1,7 ] , [ 0,7 ] , [ 0,6 ] , [ 0,5 ] , [ 0,4 ] , [ 0,3 ] , [ 1,3 ] , [ 2,1 ] , [ 2,2 ] , [ 2,3 ] , [ 2,4 ] , [ 3,8 ] , [ 3,7 ] , [ 3,6 ] , [ 3,5 ] , [ 3,4 ] , [ 4,4 ] , [ 0,10 ] , [ 1,10 ] , [ 2,10 ] , [ 3,10 ] , [ 4,10 ] , [ 5,10 ] , [ 5,9 ] , [ 5,8 ] , [ 5,7 ] , [ 5,6 ] , [ 5,5 ] , [ 5,4 ] , [ 6,4 ] , [ 7,4 ] , [ 8,4 ]], [[ 7,10 ] , [ 8,10 ] , [ 9,10 ] , [ 10,10 ] , [ 10,9 ] , [ 10,8 ] , [ 10,7 ] , [ 10,6 ]], [[ 1,7 ] , [ 0,7 ] , [ 0,6 ] , [ 0,5 ] , [ 0,4 ] , [ 0,3 ] , [ 1,3 ] , [ 2,1 ] , [ 2,2 ] , [ 2,3 ] , [ 2,4 ] , [ 3,8 ] , [ 3,7 ] , [ 3,6 ] , [ 3,5 ] , [ 3,4 ] , [ 4,4 ] , [ 0,10 ] , [ 1,10 ] , [ 2,10 ] , [ 3,10 ] , [ 4,10 ] , [ 5,10 ] , [ 5,9 ] , [ 5,8 ] , [ 5,7 ] , [ 5,6 ] , [ 5,5 ] , [ 5,4 ] , [ 6,4 ] , [ 7,4 ] , [ 8,4 ] , [ 7,10 ] , [ 8,10 ] , [ 9,10 ] , [ 10,10 ] , [ 10,9 ] , [ 10,8 ] , [ 10,7 ] , [ 10,6 ] , [ 8,5 ] , [ 9,6 ] , [ 8,6 ]]]
-
-	target_task = [[ 1,7 ] , [ 0,7 ] , [ 0,6 ] , [ 0,5 ] , [ 0,4 ] , [ 0,3 ] , [ 1,3 ] , [ 2,1 ] , [ 2,2 ] , [ 2,3 ] , [ 2,4 ] , [ 3,8 ] , [ 3,7 ] , [ 3,6 ] , [ 3,5 ] , [ 3,4 ] , [ 4,4 ] , [ 0,10 ] , [ 1,10 ] , [ 2,10 ] , [ 3,10 ] , [ 4,10 ] , [ 5,10 ] , [ 5,9 ] , [ 5,8 ] , [ 5,7 ] , [ 5,6 ] , [ 5,5 ] , [ 5,4 ] , [ 6,4 ] , [ 7,4 ] , [ 8,4 ] , [ 7,10 ] , [ 8,10 ] , [ 9,10 ] , [ 10,10 ] , [ 10,9 ] , [ 10,8 ] , [ 10,7 ] , [ 10,6 ] , [ 8,5 ] , [ 9,6 ] , [ 8,6 ] , [ 8,7 ] , [ 8,8 ]]
+	grid_size = 7
+	Subtasks = [[[ 4,0 ] , [ 4,1 ], [ 4,2 ] , [ 4,3 ] , [ 4,4 ]], [[ 4,0 ] , [ 4,1 ] , [ 5,2 ] , [ 6,2] , [ 4,2 ] , [ 4,3 ] , [ 4,4 ]], [[ 4,0 ] , [ 6,6 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ] , [ 4,3 ] , [ 4,4 ]], [[ 0, 0 ],  [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 6,6 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ] , [ 4,3 ] , [ 4,4 ]]]
+	target_task = [[ 0,0 ] , [ 1,1 ] , [ 1,2 ] , [ 1,3 ] , [ 1,4 ] , [ 1,5 ] , [ 1,0 ] , [ 2,0 ] , [ 3,0 ] , [ 4,0 ] , [ 6,6 ] , [ 6,5 ] , [ 6,4 ] , [ 6,3 ] , [ 6,2 ] , [ 4,1 ] , [ 5,2 ] , [ 4,2 ] , [ 4,3 ] , [ 4,4 ]]
 
 	no_tasks = len(Subtasks)+1
 
-	print ('total no. of tasks: ',no_tasks)
+	# print ('total no. of tasks: ',no_tasks)
 	steps_per_tasks = 500
 	# shuffle(subtasks)
 
 	change_no = 5
-	Rounds = 1
+	Rounds = 30
 	curr_step = 0
 	base_step = 0
 
@@ -57,7 +56,7 @@ if __name__ == "__main__":
 			perm += 1
 			if(perm != 1):
 				continue
-			print (perm)
+			# print (perm)
 			Q = [[[0,0,0,0] for i in range(grid_size)] for j in range(grid_size)]
 			round_no = 0
 			tot_steps = 0
@@ -78,16 +77,16 @@ if __name__ == "__main__":
 					goal = task[-1]
 					# task += 1                                 # destination of the agent
 					epsilon = 0.3
-					if(task_num == 0):
-						alpha = 0.4
-						task_num += 1
-					else:
-						alpha = 1.0
+					# if(task_num == 0):
+					# 	alpha = 0.2
+					# 	task_num += 1
+					# else:
+					alpha = 0.2
 					discount = 0.9
 					num_actions = 4                                    # up, down, right, left
 					env = Maze(grid_size, free_cells, goal)
 					# if(round_no != 1):
-					env.draw("curr_1/tasks/", perm, round_no, task_no)
+					# env.draw("curr_1/tasks/", perm, round_no, task_no)
 					exceed = 0
 					tot_reward = 0
 					while (step < steps_per_tasks):
@@ -123,7 +122,7 @@ if __name__ == "__main__":
 				if(len(reward_list) == 1):
 					num = 0
 				else:
-					num = len(reward_list)/2 + len(reward_list)%2
+					num = int(len(reward_list)/2) + len(reward_list)%2
 
 				subtasks = []
 				# print (len(reward_list))
@@ -133,17 +132,17 @@ if __name__ == "__main__":
 					subtasks.append(reward_list[i][0])
 
 			# Learning of Target Task
-			print ('target task')
+			# print ('target task')
 			free_cells = target_task[:-1]
 			goal = target_task[-1]
 
 			epsilon = 0.3
-			alpha = 0.999
+			alpha = 0.2
 			discount = 0.9
 			num_actions = 4                                    # up, down, right, left
 
 			env = Maze(grid_size, free_cells, goal)
-			env.draw("curr_1/tasks/", perm, round_no, 5)
+			# env.draw("curr_1/tasks/", perm, round_no, 5)
 
 			tot_reward = 0
 			not_change_count = 0
@@ -188,33 +187,33 @@ if __name__ == "__main__":
 			# print('Exceed: %d' % exceed)
 			tot_steps += step
 
-			plt.figure(0)
-			plot =  [[max(Q[i][j]) for i in range(grid_size)] for j in range(grid_size)]
-			plt.imshow(plot, interpolation='none', cmap='gray')
-			plt.savefig("curr_1/policies/curr_policy%d.png" % perm)
+			# plt.figure(0)
+			# plot =  [[max(Q[i][j]) for i in range(grid_size)] for j in range(grid_size)]
+			# plt.imshow(plot, interpolation='none', cmap='gray')
+			# plt.savefig("curr_1/policies/curr_policy%d.png" % perm)
 
-			plt.figure(1)
-			plt.plot(s_list, r_list)
-			plt.xscale('log')
-			# plt.yscale('log')
-			plt.savefig('curr_1/result_%d_1.png' % perm)
-
-			# print (r_list[0], s_list[0])
-			plt.figure(2)
-			plt.plot(s_list,r_list)
+			# plt.figure(1)
+			# plt.plot(s_list, r_list)
 			# plt.xscale('log')
-			plt.savefig('curr_1/result_%d_2.png' % perm)
+			# # plt.yscale('log')
+			# plt.savefig('curr_1/result_%d_1.png' % perm)
+
+			# # print (r_list[0], s_list[0])
+			# plt.figure(2)
+			# plt.plot(s_list,r_list)
+			# # plt.xscale('log')
+			# plt.savefig('curr_1/result_%d_2.png' % perm)
 
 		# BASELINE
 
-		print ('baseline')
+		# print ('baseline')
 		tot_reward = 0
 		r_list = [] # reward list for target task
 		s_list = [] # step list for target task
 		step = 0
 
 		epsilon = 0.3
-		alpha = 0.4
+		alpha = 0.2
 		discount = 0.9
 		num_actions = 4 
 
