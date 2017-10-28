@@ -19,7 +19,6 @@ def change(Q1, Q2, env):
 	return change
 
 def learntask(perm, task_num, task, Q, grid_size, epsilon = 0.3, alpha = 0.6, discount = 0.9, tau = 500):
-	env = Maze(grid_size, task[:-1], task[-1])
 	# if(task_num == 1):
 	# 	env.draw("verify2/tasks/", perm, task_num)
 	num_actions = env.num_actions
